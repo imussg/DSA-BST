@@ -1,23 +1,23 @@
 /*		3,1,4,6,9,2,5,7
-				3
-			   /  \
-			  1    4
-			   \    \
-			    2    6
-			         /\
-			        5  9
-			           /
-			          7
+                3
+			   / \
+			  1   4
+			   \   \
+			    2   6
+			       / \
+			      5   9
+			         /
+			        7
 THE TREE WITH ROOT REMOVED
-				2
+                2
 			   / \
 			  1   4
 			  	   \
 			        6
-			        /\
-			       5  9
-			          /
-			         7
+			       / \
+			      5   9
+			         /
+			        7
 */
 class BinarySearchTree {
 	
@@ -203,7 +203,7 @@ function main() {
 	// console.log(bst.find(7));
 	bst.insert(7, "value7");
 	/*
-			3
+	        3
 		   / \
 		  1   4
 		   \   \
@@ -223,7 +223,7 @@ function main() {
 	console.log(bst.isBalanced());
 	let temp = new BinarySearchTree();
 	/*
-			4
+	        4
 		   / \
 		  2   5
 		 / \   \
