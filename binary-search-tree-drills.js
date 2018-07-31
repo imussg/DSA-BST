@@ -100,7 +100,33 @@ class BinarySearchTree {
 		return currentMaxHeight;
 	}
 
-
+	isBalanced() {
+		let bottomNodes = this._findBottomNodes();
+		let heights = [];
+		let count = 0;
+		for(let i=0; i<bottomNodes.length; i++) {
+			let iter = bottomNodes[i];
+			while(iter) {
+				count++;
+				iter = iter.parent;
+			}
+			heights.push(count);
+			count = 0;
+		}
+		let uniformHeight = 0;
+		return heights;
+		while(count < heights.length) {
+			if(count === 0) {
+				uniformHeight = heights[0];
+			} else {
+				if(uniformHeight !== heights[count]) {
+					return false;
+				}
+			}
+			count++;
+		}
+		return true;
+	}
 
 	printKeys() {
 		if(this.left && this.right) {
@@ -172,6 +198,10 @@ function main() {
 	bst.insert(2, "value5");
 	bst.insert(5, "value6");
 	bst.insert(7, "value7");
+
+	bst.remove(7);
+	// console.log(bst.find(7));
+	bst.insert(7, "value7");
 	/*
 			3
 		   / \
@@ -184,13 +214,29 @@ function main() {
 		        7
 	height = 5
 	*/
-	// console.log(["Value at key 7: ", bst.find(7)]);
-	// bst.remove(7);
-	// console.log(bst.find(7));
 	console.log(bst.printKeys());
 	console.log(bst.height());
+	
 	console.log(isBst(bst));
 	console.log(thirdLargest(bst));
+
+	console.log(bst.isBalanced());
+	let temp = new BinarySearchTree();
+	/*
+			4
+		   / \
+		  2   5
+		 / \   \
+		1   3   6
+	*/
+	temp.insert(3, "value");
+	temp.insert(2, "value1");
+	temp.insert(4, "value2");
+	temp.insert(6, "value3");
+	temp.insert(1, "value4");
+	temp.insert(3, "value5");
+	// should be true
+	console.log(temp.isBalanced());
 }
 
 function isBst(list) {
