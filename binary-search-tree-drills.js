@@ -84,6 +84,48 @@ class BinarySearchTree {
 		}
 	}
 
+	height() {
+		let bottomNodes = this._findBottomNodes();
+		let currentMaxHeight = 0;
+		let count = 0;
+		for(let i=0; i<bottomNodes.length; i++) {
+			let iter = bottomNodes[i];
+			while(iter) {
+				count++;
+				iter = iter.parent;
+			}
+			currentMaxHeight = count > currentMaxHeight ? count : currentMaxHeight;
+			count = 0;
+		}
+		return currentMaxHeight;
+	}
+
+
+
+	printKeys() {
+		if(this.left && this.right) {
+			return `${this.key}--> (${this.left.printKeys()}) <|> (${this.right.printKeys()})`;
+		} else if(this.left) {
+			return `${this.key}--> (${this.left.printKeys()}) <|`;
+		} else if(this.right) {
+			return `${this.key}--> |> (${this.right.printKeys()})`;
+		} else {
+			return `${this.key}`;
+		}
+	}
+
+	_findBottomNodes() {
+		if(!this.left && !this.right) {
+			return [this];
+		} else if(this.left && this.right) {
+			return [...this.left._findBottomNodes(), ...this.right._findBottomNodes()];
+		} else if(this.left) {
+			return [...this.left._findBottomNodes()];
+		} else {
+			return [...this.right._findBottomNodes()];
+		}
+	}
+
 	_replaceWith(node) {
 		if(this.parent) {
 			// connect passed in node to the parent of this
@@ -121,7 +163,7 @@ class BinarySearchTree {
 
 function main() {
 	let bst = new BinarySearchTree();
-	// 3,1,4,6,9,2,5,7
+
 	bst.insert(3, "value");
 	bst.insert(1, "value1");
 	bst.insert(4, "value2");
@@ -130,10 +172,47 @@ function main() {
 	bst.insert(2, "value5");
 	bst.insert(5, "value6");
 	bst.insert(7, "value7");
-
+	/*
+			3
+		   / \
+		  1   4
+		   \   \
+		    2   6
+		       / \
+		      5   9
+		         /
+		        7
+	height = 5
+	*/
 	// console.log(["Value at key 7: ", bst.find(7)]);
-	bst.remove(7);
-	console.log(bst.find(7));
+	// bst.remove(7);
+	// console.log(bst.find(7));
+	console.log(bst.printKeys());
+	console.log(bst.height());
+	console.log(isBst(bst));
+}
+
+function isBst(list) {
+	if(list.left && list.right) {
+		if(list.left.key < list.key && list.right.key > list.key) {
+			return isBst(list.left) && isBst(list.right);
+		} else {
+			return false;
+		}
+	} else if(list.left) {
+		if(list.left.key < list.key) {
+			return isBst(list.left);
+		} else {
+			return false;
+		}
+	} else if(list.right) {
+		if(list.right.key > list.key) {
+			return isBst(list.right.key);
+		} else {
+			return false;
+		}
+	}
+	return (list !== null);
 }
 
 main();
