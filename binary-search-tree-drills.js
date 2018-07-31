@@ -190,6 +190,7 @@ function main() {
 	console.log(bst.printKeys());
 	console.log(bst.height());
 	console.log(isBst(bst));
+	console.log(thirdLargest(bst));
 }
 
 function isBst(list) {
@@ -213,6 +214,39 @@ function isBst(list) {
 		}
 	}
 	return (list !== null);
+}
+
+function thirdLargest(list, max=[]) {
+	if(max.length < 3) {
+		max.push(list.key);
+	} else {
+		if(max[2] < list.key) {
+			if(max[1] < list.key) {
+				if(max[0] < list.key) {
+					max[2] = max[1];
+					max[1] = max[0];
+					max[0] = list.key;
+				} else {
+					max[2] = max[1];
+					max[1] = list.key;
+				}
+			} else {
+				max[2] = list.key;
+			}
+		}
+	}
+	if(list.left && list.right) {
+		thirdLargest(list.left, max);
+		thirdLargest(list.right, max);
+	} else if(list.left) {
+		thirdLargest(list.left, max);
+	} else if(list.right) {
+		thirdLargest(list.right, max);
+	}
+	if(max.length === 3) {
+		return max[2];
+	}
+	return null;
 }
 
 main();
