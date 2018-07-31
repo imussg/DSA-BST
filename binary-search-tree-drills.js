@@ -1,23 +1,23 @@
 /*		3,1,4,6,9,2,5,7
-                3
-			   / \
-			  1   4
-			   \   \
-			    2   6
-			       / \
-			      5   9
-			         /
-			        7
+    3
+   / \
+  1   4
+   \   \
+    2   6
+       / \
+      5   9
+         /
+        7
 THE TREE WITH ROOT REMOVED
-                2
-			   / \
-			  1   4
-			  	   \
-			        6
-			       / \
-			      5   9
-			         /
-			        7
+    2
+   / \
+  1   4
+  	   \
+        6
+       / \
+      5   9
+         /
+        7
 */
 class BinarySearchTree {
 	
@@ -114,7 +114,7 @@ class BinarySearchTree {
 			count = 0;
 		}
 		let uniformHeight = 0;
-		return heights;
+		// return heights;
 		while(count < heights.length) {
 			if(count === 0) {
 				uniformHeight = heights[0];
@@ -203,17 +203,17 @@ function main() {
 	// console.log(bst.find(7));
 	bst.insert(7, "value7");
 	/*
-	        3
-		   / \
-		  1   4
-		   \   \
-		    2   6
-		       / \
-		      5   9
-		         /
-		        7
-	height = 5
-	*/
+    3
+   / \
+  1   4
+   \   \
+    2   6
+       / \
+      5   9
+         /
+        7
+height = 5
+*/
 	console.log(bst.printKeys());
 	console.log(bst.height());
 	
@@ -223,11 +223,11 @@ function main() {
 	console.log(bst.isBalanced());
 	let temp = new BinarySearchTree();
 	/*
-	        4
-		   / \
-		  2   5
-		 / \   \
-		1   3   6
+    4
+   / \
+  2   5
+ / \   \
+1   3   6
 	*/
 	temp.insert(3, "value");
 	temp.insert(2, "value1");
@@ -264,7 +264,28 @@ function isBst(list) {
 
 function thirdLargest(list, max=[]) {
 	if(max.length < 3) {
-		max.push(list.key);
+		if(max.length === 0) {
+			max.push(list.key);
+		} else if(max.length === 1) {
+			if(max[0] < list.key) {
+				max.push(max[0]);
+				max[0] = list.key;
+			} else {
+				max.push(list.key);
+			}
+		} else if(max.length === 2) {
+			if(max[0] < list.key) {
+				max.push(max[1]);
+				max[1] = max[0];
+				max[0] = list.key;
+			} else if(max[1] < list.key) {
+				max.push(max[1]);
+				max[1] = list.key;
+			} else {
+				max.push(list.key);
+			}
+		}
+		
 	} else {
 		if(max[2] < list.key) {
 			if(max[1] < list.key) {
